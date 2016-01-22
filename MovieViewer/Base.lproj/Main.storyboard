@@ -66,12 +66,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="k2o-VM-gaX" kind="modal" id="g4L-HS-DmT"/>
+                                    <segue destination="1we-Jl-14n" kind="push" id="BE1-OF-Ti4"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cellsButton" destination="9rh-kI-hxX" id="cHG-Mk-86G"/>
                         <outlet property="tableView" destination="msb-QP-7YL" id="ZyT-ij-TL9"/>
                     </connections>
                 </viewController>
@@ -84,7 +85,7 @@
             <objects>
                 <viewController id="1we-Jl-14n" customClass="CollectionViewController" customModule="MovieViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cYG-Kn-5oD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="KlG-Xu-oTS">
@@ -98,7 +99,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MoviesCollectionCells" id="yDX-eg-vJQ" customClass="CollectionViewCell" customModule="MovieViewer" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="132" height="163"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="132" height="163"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="132" height="163"/>
@@ -127,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vX3-6U-33V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1226" y="1119"/>
+            <point key="canvasLocation" x="694" y="1063"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="ZV9-rl-JLL">
@@ -224,7 +225,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XIc-gW-DMj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="694" y="1119"/>
+            <point key="canvasLocation" x="234" y="1063"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="BE1-OF-Ti4"/>
+    </inferredMetricsTieBreakers>
 </document>

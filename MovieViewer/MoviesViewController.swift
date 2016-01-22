@@ -12,6 +12,7 @@ import PKHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var cellsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var networkErrorView: UIView!
     
@@ -63,6 +64,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let overview = movie["overview"] as? String
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        cell.cellsButton.tag = indexPath.row`
+
+        
         
         let baseURL = "http://image.tmdb.org/t/p/w500"
         
@@ -126,9 +130,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        let cell = sender as! UITableViewCell
+        let cell = sender as! UIButton
         let indexPath = tableView.indexPathForCell(cell)
         let movie = movies![indexPath!.row]
+      
+        
+
         
         let detailViewController = segue.destinationViewController as! DetailViewController
         detailViewController.movie = movie

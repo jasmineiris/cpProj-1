@@ -55,6 +55,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: CollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MoviesCollectionCells", forIndexPath: indexPath) as! CollectionViewCell
+        
         let movie = movies![indexPath.row]
         //let title = movie["title"] as? String
         //let overview = movie["overview"] as? String
