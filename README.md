@@ -19,6 +19,7 @@ The following **required** functionality is complete:
 
 The following **optional** features are implemented:
 
+- [ ] User sees an error message when there's a networking error.
 - [ ] Movies are displayed using a CollectionView instead of a TableView.
 - [x] User can select from a tab bar for either "Now Playing" or "Top Rated" movies.
 - [ ] User can search for a movie.
@@ -33,7 +34,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/jasmineiris/cpProj-1/blob/master/MovieHub.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
