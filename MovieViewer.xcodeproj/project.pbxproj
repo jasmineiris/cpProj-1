@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		361BE3681C4CA33C000B43D3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BE3671C4CA33C000B43D3 /* DetailViewController.swift */; };
+		3655B64B1C51AF1B008AF4E3 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3655B64A1C51AF1B008AF4E3 /* MovieCell.swift */; };
 		368CB4B31C3C7387003303C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368CB4B21C3C7387003303C4 /* AppDelegate.swift */; };
 		368CB4B81C3C7387003303C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 368CB4B61C3C7387003303C4 /* Main.storyboard */; };
 		368CB4BA1C3C7387003303C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 368CB4B91C3C7387003303C4 /* Assets.xcassets */; };
 		368CB4BD1C3C7387003303C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 368CB4BB1C3C7387003303C4 /* LaunchScreen.storyboard */; };
 		368CB4C51C3C74B8003303C4 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368CB4C41C3C74B8003303C4 /* MoviesViewController.swift */; };
-		368CB4C81C3C9027003303C4 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368CB4C71C3C9027003303C4 /* MovieCell.swift */; };
+		36B54CBF1C51B33900F16C7A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B54CBE1C51B33900F16C7A /* CollectionViewController.swift */; };
+		36F3D1021C505C94008E1131 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F3D1011C505C94008E1131 /* CollectionViewCell.swift */; };
 		EB41A9E632CD6B04A1276991 /* Pods_MovieViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A5228ABCD068E98702580CF /* Pods_MovieViewer.framework */; };
 /* End PBXBuildFile section */
 
@@ -20,6 +23,8 @@
 		0F658A106ECDD1CA73A35489 /* Pods-MovieViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieViewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MovieViewer/Pods-MovieViewer.debug.xcconfig"; sourceTree = "<group>"; };
 		207B6EA2DD7E2C9F60B68F4C /* Pods-MovieViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieViewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-MovieViewer/Pods-MovieViewer.release.xcconfig"; sourceTree = "<group>"; };
 		2A5228ABCD068E98702580CF /* Pods_MovieViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		361BE3671C4CA33C000B43D3 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		3655B64A1C51AF1B008AF4E3 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		368CB4AF1C3C7387003303C4 /* MovieViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		368CB4B21C3C7387003303C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		368CB4B71C3C7387003303C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -27,7 +32,8 @@
 		368CB4BC1C3C7387003303C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		368CB4BE1C3C7387003303C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		368CB4C41C3C74B8003303C4 /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
-		368CB4C71C3C9027003303C4 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		36B54CBE1C51B33900F16C7A /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		36F3D1011C505C94008E1131 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +83,8 @@
 		368CB4C61C3C8FD6003303C4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				368CB4C71C3C9027003303C4 /* MovieCell.swift */,
+				3655B64A1C51AF1B008AF4E3 /* MovieCell.swift */,
+				36F3D1011C505C94008E1131 /* CollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -86,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				368CB4C41C3C74B8003303C4 /* MoviesViewController.swift */,
+				36B54CBE1C51B33900F16C7A /* CollectionViewController.swift */,
+				361BE3671C4CA33C000B43D3 /* DetailViewController.swift */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -230,9 +239,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36B54CBF1C51B33900F16C7A /* CollectionViewController.swift in Sources */,
+				36F3D1021C505C94008E1131 /* CollectionViewCell.swift in Sources */,
 				368CB4B31C3C7387003303C4 /* AppDelegate.swift in Sources */,
 				368CB4C51C3C74B8003303C4 /* MoviesViewController.swift in Sources */,
-				368CB4C81C3C9027003303C4 /* MovieCell.swift in Sources */,
+				3655B64B1C51AF1B008AF4E3 /* MovieCell.swift in Sources */,
+				361BE3681C4CA33C000B43D3 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

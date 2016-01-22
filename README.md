@@ -3,24 +3,24 @@ Movie Theater Review iOS App
 
 # Project 1 - *MovieHub*
 
-**Moviehub** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
+**MovieHub** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **15** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is complete:
 
-- [ ] User can view a list of movies currently playing in theaters from The Movie Database.
-- [ ] Poster images are loaded using the UIImageView category in the AFNetworking library.
-- [ ] User sees a loading state while waiting for the movies API.
-- [ ] User can pull to refresh the movie list.
-- [ ] User sees an error message when there's a networking error.  
+- [x] User can view a list of movies currently playing in theaters from The Movie Database.
+- [x] Poster images are loaded using the UIImageView category in the AFNetworking library.
+- [x] User sees a loading state while waiting for the movies API.
+- [x] User can pull to refresh the movie list.
+- [x] User sees an error message when there's a networking error.  
 
 The following **optional** features are implemented:
 
 - [ ] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can select from a tab bar for either "Now Playing" or "Top Rated" movies.
+- [x] User can select from a tab bar for either "Now Playing" or "Top Rated" movies.
 - [ ] User can search for a movie.
 - [ ] All images fade in as they are loading.
 - [ ] Customize the UI.

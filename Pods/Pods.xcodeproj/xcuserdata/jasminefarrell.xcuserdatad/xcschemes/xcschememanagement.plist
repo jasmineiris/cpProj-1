@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>PKHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MovieViewer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>11A6D1DDBABE3715A16A998C481F870D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7207AF1DAE990B7AE157CF8D04674D82</key>
+		<key>8479B4B2FE48BC1FF3AD9763D939F5CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
