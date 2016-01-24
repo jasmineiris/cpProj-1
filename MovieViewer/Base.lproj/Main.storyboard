@@ -64,7 +64,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9rh-kI-hxX">
                                 <rect key="frame" x="16" y="2" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="gird"/>
+                                <state key="normal" image="grid"/>
                                 <connections>
                                     <segue destination="1we-Jl-14n" kind="push" identifier="gridView" id="1MJ-Gp-2Pr"/>
                                 </connections>
@@ -211,9 +211,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gird" width="39" height="39"/>
+        <image name="grid" width="39" height="39"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Jv2-Pz-9TV"/>
+        <segue reference="hZE-kZ-tnA"/>
     </inferredMetricsTieBreakers>
 </document>
