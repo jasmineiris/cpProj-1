@@ -16,9 +16,16 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     var movies: [NSDictionary]?
     var refreshControl: UIRefreshControl!
     var endpoint: String!
+    var searchController = UISearchController(searchResultsController: nil)
+    
+    @IBAction func resultsButtonSecond(sender: AnyObject) {
+        self.presentViewController(searchController, animated: true, completion: nil)
+    }
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchController.hidesNavigationBarDuringPresentation = false
         
         collectionView.dataSource = self
         collectionView.delegate = self

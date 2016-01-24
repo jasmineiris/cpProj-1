@@ -15,12 +15,22 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var networkErrorView: UIView!
     
+    
     var movies: [NSDictionary]?
     var refreshControl: UIRefreshControl!
     var endpoint: String!
+    var searchController = UISearchController(searchResultsController: nil)
+    
+    @IBAction func resultsButton(sender: AnyObject) {
+        
+        self.presentViewController(searchController, animated: true, completion: nil)
+            
+        print("search")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchController.hidesNavigationBarDuringPresentation = false
         
         tableView.dataSource = self
         tableView.delegate = self

@@ -70,8 +70,11 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="dYq-lP-jHA">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="v50-KU-87q">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="resultsButton:" destination="BYZ-38-t0r" id="Olo-sV-C7G"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -135,13 +138,26 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Km7-lE-Ws0">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="6iS-M1-48v"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="jEJ-6A-Stn">
+                            <connections>
+                                <action selector="resultsButtonSecond:" destination="1we-Jl-14n" id="hGp-9O-fYh"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="KlG-Xu-oTS" id="cef-to-fBL"/>
+                        <outlet property="searchDisplayController" destination="nfk-fo-cX2" id="NTy-co-QPg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vX3-6U-33V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="nfk-fo-cX2">
+                    <connections>
+                        <outlet property="delegate" destination="1we-Jl-14n" id="96G-CE-61e"/>
+                        <outlet property="searchContentsController" destination="1we-Jl-14n" id="HrJ-w6-tRn"/>
+                        <outlet property="searchResultsDataSource" destination="1we-Jl-14n" id="LDe-aD-3qk"/>
+                        <outlet property="searchResultsDelegate" destination="1we-Jl-14n" id="XjO-Ry-gzh"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="694" y="1163"/>
         </scene>
@@ -229,6 +245,6 @@
         <image name="grid" width="39" height="39"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hZE-kZ-tnA"/>
+        <segue reference="Jv2-Pz-9TV"/>
     </inferredMetricsTieBreakers>
 </document>
