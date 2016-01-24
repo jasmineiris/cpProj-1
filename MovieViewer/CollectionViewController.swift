@@ -56,10 +56,33 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         
         let cell: CollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MoviesCollectionCells", forIndexPath: indexPath) as! CollectionViewCell
         let movie = movies![indexPath.row]
-        //let title = movie["title"] as? String
-        //let overview = movie["overview"] as? String
-                
         let baseURL = "http://image.tmdb.org/t/p/w500"
+        
+        
+        let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
+        let imageRequest = NSURLRequest(URL: NSURL(string: imageUrl)!)
+        
+        cell.imageCell.setImageWithURLRequest(
+            imageRequest,
+            placeholderImage: nil,
+            success: { (imageRequest, imageResponse, image) -> Void in
+                
+                // imageResponse will be nil if the image is cached
+                if imageResponse == nil {
+                    print("Image was NOT cached, fade in image")
+                    cell.imageCell.alpha = 0.0
+                    cell.imageCell.image = image
+                    UIView.animateWithDuration( 2, animations: { () -> Void in
+                        cell.imageCell.alpha = 1.0
+                    })
+                } else {
+                    print("Image was cached so just update the image")
+                    cell.imageCell.image = image
+                }
+            },
+            failure: { (imageRequest, imageResponse, error) -> Void in
+                // do something for the failure condition
+        })
         
         if let posterPath = movie["poster_path"] as? String {
             let posterURL = NSURL(string: baseURL + posterPath)
@@ -106,7 +129,23 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     func didRefresh() {
         networkRequest()
     }
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "detailView" {
+            print("detail segue called")
+            let cell = sender as! UICollectionViewCell
+            let indexPath = collectionView.indexPathForCell(cell)
+            let movie = movies![indexPath!.row]
+            
+            let detailViewController = segue.destinationViewController as! DetailViewController
+            detailViewController.movie = movie
+            
+            
+            print("detail segue called")
+            // Get the new view controller using segue.destinationViewController.
+            // Pass the selected object to the new view controller.
+        } 
+    }
 
 }
 
