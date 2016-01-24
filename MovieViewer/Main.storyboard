@@ -60,13 +60,13 @@
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="QZB-Uh-qEU">
-                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="pZy-ih-0XO">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="pZy-ih-0XO">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9rh-kI-hxX">
                                 <rect key="frame" x="16" y="2" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="gird"/>
                                 <connections>
-                                    <segue destination="1we-Jl-14n" kind="push" identifier="gridView" id="1MJ-Gp-2Pr"/>
+                                    <segue destination="gUq-k8-OlA" kind="push" identifier="gridView" id="NEi-MA-4Pf"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -84,7 +84,7 @@
             <objects>
                 <viewController id="1we-Jl-14n" customClass="CollectionViewController" customModule="MovieViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cYG-Kn-5oD">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="KlG-Xu-oTS">
@@ -98,7 +98,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MoviesCollectionCells" id="yDX-eg-vJQ" customClass="CollectionViewCell" customModule="MovieViewer" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="132" height="163"/>
+                                        <rect key="frame" x="0.0" y="64" width="132" height="163"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="132" height="163"/>
@@ -113,7 +113,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="imageCell" destination="Dhm-oJ-kQk" id="HFF-jo-uNr"/>
-                                            <segue destination="dPp-8m-Uvp" kind="push" identifier="detailView" id="Jv2-Pz-9TV"/>
+                                            <segue destination="dPp-8m-Uvp" kind="push" identifier="detailView" id="AES-QY-fDG"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -121,14 +121,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Km7-lE-Ws0"/>
+                    <navigationItem key="navigationItem" id="Km7-lE-Ws0">
+                        <barButtonItem key="leftBarButtonItem" image="table" id="Qk8-J4-uoV"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="KlG-Xu-oTS" id="cef-to-fBL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vX3-6U-33V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="694" y="1163"/>
+            <point key="canvasLocation" x="1724" y="368"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="ZV9-rl-JLL">
@@ -183,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QU4-B5-1zX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1250" y="704"/>
+            <point key="canvasLocation" x="980" y="1240"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GOZ-00-9e4">
@@ -209,11 +211,32 @@
             </objects>
             <point key="canvasLocation" x="246" y="368"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="V3l-Vh-ca7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gUq-k8-OlA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="9FB-Lx-iIG"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KWk-vw-kHG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1we-Jl-14n" kind="relationship" relationship="rootViewController" id="Rjb-Jh-WlF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WoJ-Yc-1Ux" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1264" y="368"/>
+        </scene>
     </scenes>
     <resources>
         <image name="gird" width="39" height="39"/>
+        <image name="table" width="39" height="39"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Jv2-Pz-9TV"/>
+        <segue reference="hZE-kZ-tnA"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
 </document>
