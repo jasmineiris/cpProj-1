@@ -15,6 +15,7 @@
 		368CB4BD1C3C7387003303C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 368CB4BB1C3C7387003303C4 /* LaunchScreen.storyboard */; };
 		368CB4C51C3C74B8003303C4 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368CB4C41C3C74B8003303C4 /* MoviesViewController.swift */; };
 		36B54CBF1C51B33900F16C7A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B54CBE1C51B33900F16C7A /* CollectionViewController.swift */; };
+		36DE82521C55DE1600CD5D1E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36DE82511C55DE1600CD5D1E /* Images.xcassets */; };
 		36F3D1021C505C94008E1131 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F3D1011C505C94008E1131 /* CollectionViewCell.swift */; };
 		EB41A9E632CD6B04A1276991 /* Pods_MovieViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A5228ABCD068E98702580CF /* Pods_MovieViewer.framework */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,7 @@
 		368CB4BE1C3C7387003303C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		368CB4C41C3C74B8003303C4 /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
 		36B54CBE1C51B33900F16C7A /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		36DE82511C55DE1600CD5D1E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		36F3D1011C505C94008E1131 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +78,7 @@
 				368CB4B91C3C7387003303C4 /* Assets.xcassets */,
 				368CB4BB1C3C7387003303C4 /* LaunchScreen.storyboard */,
 				368CB4BE1C3C7387003303C4 /* Info.plist */,
+				36DE82511C55DE1600CD5D1E /* Images.xcassets */,
 			);
 			path = MovieViewer;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				368CB4BD1C3C7387003303C4 /* LaunchScreen.storyboard in Resources */,
+				36DE82521C55DE1600CD5D1E /* Images.xcassets in Resources */,
 				368CB4BA1C3C7387003303C4 /* Assets.xcassets in Resources */,
 				368CB4B81C3C7387003303C4 /* Main.storyboard in Resources */,
 			);

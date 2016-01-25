@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:MovieViewer.xcodeproj">
+      location = "group:/Users/jasminefarrell/dev/git/cpProj-1/MovieViewer.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
