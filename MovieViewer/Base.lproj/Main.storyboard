@@ -60,7 +60,7 @@
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="QZB-Uh-qEU">
-                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="pZy-ih-0XO">
+                        <barButtonItem key="leftBarButtonItem" title="Item" style="done" id="pZy-ih-0XO">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9rh-kI-hxX">
                                 <rect key="frame" x="16" y="2" width="39" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -245,6 +245,6 @@
         <image name="grid" width="39" height="39"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Jv2-Pz-9TV"/>
+        <segue reference="hZE-kZ-tnA"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -11,21 +11,29 @@ import AFNetworking
 import PKHUD
 
 class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var movies: [NSDictionary]?
+    var filterMovies: [NSDictionary]?
     var refreshControl: UIRefreshControl!
     var endpoint: String!
+    //search bar display
     var searchController = UISearchController(searchResultsController: nil)
     
+    //search bar display
     @IBAction func resultsButtonSecond(sender: AnyObject) {
         self.presentViewController(searchController, animated: true, completion: nil)
     }
   
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //search bar display
         searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        searchController.searchResultsUpdater = self
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -48,8 +56,11 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         // Dispose of any resources that can be recreated.
     }
     
-    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+        if searchController.active && searchController.searchBar.text != "" {
+            return filterMovies!.count
+        }
         if let movies = movies {
             return movies.count
         } else {
@@ -57,12 +68,25 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
     }
+
+    
+    func filterContentForSearchText(searchText: String, scope: String = "all") {
+        filterMovies = movies!.filter { mov in return mov["title"]!.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        
+        collectionView.reloadData()
+    }
+
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: CollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MoviesCollectionCells", forIndexPath: indexPath) as! CollectionViewCell
-        let movie = movies![indexPath.row]
+        var movie = movies![indexPath.row]
+        if searchController.active && searchController.searchBar.text != "" {
+            movie = filterMovies![indexPath.row]
+        }
+        
         let baseURL = "http://image.tmdb.org/t/p/w500"
         
         
@@ -155,28 +179,9 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     }
 
 }
-
-
-  /*      override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+extension CollectionViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
-*/
+}
 
