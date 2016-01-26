@@ -31,6 +31,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         //search bar display
+        
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true
     
@@ -50,6 +51,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         networkRequest()
         
         // Do any additional setup after loading the view.
+    }
+    
+    
+    func roundFloat(value: Float) -> Float {
+        return roundf(value * 100) / 100
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,8 +82,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         tableView.reloadData()
     }
-
-    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -94,10 +98,46 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
         
-        let baseURL = "http://image.tmdb.org/t/p/w500"
-        
         let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
+        let baseURL = "http://image.tmdb.org/t/p/w500"
+        //let baseUrlSmall = "http://image.tmdb.org/t/p/w92"
+        
+        let low_resolution = "https://image.tmdb.org/t/p/w45"       //low resolution image's address
+        let high_resolution = "https://image.tmdb.org/t/p/original" //high resolution image's address
         let imageRequest = NSURLRequest(URL: NSURL(string: imageUrl)!)
+        let posterPath = movie["poster_path"] as! String?
+        let smallImage = NSURL(string: low_resolution + posterPath!)
+        let largeImage = NSURL(string: high_resolution + posterPath!)
+        
+        let smallImageRequest = NSURLRequest(URL: smallImage!)
+        let largeImageRequest = NSURLRequest(URL: largeImage!)
+        
+        func loadLowResolutionThenLargerImages(smallImageRequest: NSURLRequest,
+            largeImageRequest: NSURLRequest, poster: UIImageView?) {
+                
+                cell.posterView!.setImageWithURLRequest(smallImageRequest,
+                    placeholderImage: nil ,
+                    success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
+                        cell.posterView!.alpha = 0.0
+                        cell.posterView!.image = smallImage
+                        //cell.posterVIew!.contentMode = .ScaleAspectFit
+                        
+                        UIView.animateWithDuration(0.3, animations: { cell.posterView!.alpha = 1.0 },
+                            completion: { (success) -> Void in
+                                cell.posterView!.setImageWithURLRequest(largeImageRequest,
+                                    placeholderImage: smallImage,
+                                    success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
+                                        cell.posterView!.image = largeImage
+                                    }, failure: { (request, response, error ) -> Void in
+                                        cell.posterView!.image = UIImage(named: "posterView")
+                                })
+                            }
+                        )
+                    }, failure: {(request, response, error) -> Void in
+                        cell.posterView!.image = UIImage(named: "posterView")
+                    }
+                )
+        }
         
         cell.posterView.setImageWithURLRequest(
             imageRequest,

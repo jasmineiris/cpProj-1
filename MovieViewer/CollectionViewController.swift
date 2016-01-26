@@ -88,10 +88,46 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
         let baseURL = "http://image.tmdb.org/t/p/w500"
-        
-        
         let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
         let imageRequest = NSURLRequest(URL: NSURL(string: imageUrl)!)
+        
+        
+        let low_resolution = "https://image.tmdb.org/t/p/w45"       //low resolution image's address
+        let high_resolution = "https://image.tmdb.org/t/p/original" //high resolution image's address
+        let posterPath = movie["poster_path"] as! String?
+        let smallImage = NSURL(string: low_resolution + posterPath!)
+        let largeImage = NSURL(string: high_resolution + posterPath!)
+        
+        let smallImageRequest = NSURLRequest(URL: smallImage!)
+        let largeImageRequest = NSURLRequest(URL: largeImage!)
+        
+        func loadLowResolutionThenLargerImages(smallImageRequest: NSURLRequest,
+            largeImageRequest: NSURLRequest, poster: UIImageView?) {
+                
+                cell.imageCell.setImageWithURLRequest(smallImageRequest,
+                    placeholderImage: nil ,
+                    success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
+                        cell.imageCell!.alpha = 0.0
+                        cell.imageCell!.image = smallImage
+                     
+                        
+                        UIView.animateWithDuration(0.3, animations: { cell.imageCell!.alpha = 1.0 },
+                            completion: { (success) -> Void in
+                                cell.imageCell!.setImageWithURLRequest(largeImageRequest,
+                                    placeholderImage: smallImage,
+                                    success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
+                                        cell.imageCell!.image = largeImage
+                                    }, failure: { (request, response, error ) -> Void in
+                                        cell.imageCell!.image = UIImage(named: "posterView")
+                                })
+                            }
+                        )
+                    }, failure: {(request, response, error) -> Void in
+                        cell.imageCell!.image = UIImage(named: "posterView")
+                    }
+                )
+        }
+
         
         cell.imageCell.setImageWithURLRequest(
             imageRequest,
