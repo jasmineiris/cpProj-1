@@ -100,10 +100,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
         let baseURL = "http://image.tmdb.org/t/p/w500"
-        //let baseUrlSmall = "http://image.tmdb.org/t/p/w92"
         
-        let low_resolution = "https://image.tmdb.org/t/p/w45"       //low resolution image's address
-        let high_resolution = "https://image.tmdb.org/t/p/original" //high resolution image's address
+        let low_resolution = "https://image.tmdb.org/t/p/w45"
+        let high_resolution = "https://image.tmdb.org/t/p/original"
         let imageRequest = NSURLRequest(URL: NSURL(string: imageUrl)!)
         let posterPath = movie["poster_path"] as! String?
         let smallImage = NSURL(string: low_resolution + posterPath!)
