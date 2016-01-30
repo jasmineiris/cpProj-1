@@ -14,6 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var networkErrorView: UIView!
+   
     
     var movies: [NSDictionary]?
     var filterMovies: [NSDictionary]?
@@ -33,9 +34,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         //search bar display
         
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = true
-    
+        searchController.dimsBackgroundDuringPresentation = false
+        //searchController.searchBar.tintColor.CGColor
         searchController.searchResultsUpdater = self
+
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -70,10 +72,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             return filterMovies!.count
         }
         if let movies = movies {
+            //return filterMovies!.count
             return movies.count
         } else {
             return 0
         }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //table view function that runs when an item is selected
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        print("item selected")
+        print(indexPath)
+        
+    
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "all") {
@@ -95,6 +108,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let title = movie["title"] as? String
         let overview = movie["overview"] as? String
+        let rating = movie["vote_average"]!.stringValue + " / 10"
+        
+        cell.ratingLabel.text = rating
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
         
@@ -145,14 +161,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 
                 // imageResponse will be nil if the image is cached
                 if imageResponse != nil {
-                    print("Image was NOT cached, fade in image")
+                    //print("Image was NOT cached, fade in image")
                     cell.posterView.alpha = 0.0
                     cell.posterView.image = image
                     UIView.animateWithDuration( 0.8, animations: { () -> Void in
                         cell.posterView.alpha = 1.0
                     })
                 } else {
-                    print("Image was cached so just update the image")
+                    //print("Image was cached so just update the image")
                     cell.posterView.image = image
                 }
             },
@@ -185,7 +201,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
                             //NSLog("response: \(responseDictionary)")
-                            
+                            print(responseDictionary)
                             self.movies = responseDictionary["results"] as? [NSDictionary]
                             //print(self.movies![1]["title"])
                             self.tableView.reloadData()
@@ -206,20 +222,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         networkRequest()
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
         if segue.identifier == "detailView" {
             print("detail segue called")
             let cell = sender as! UITableViewCell
             let indexPath = tableView.indexPathForCell(cell)
-            let movie = movies![indexPath!.row]
-        
+            
+            var movie = movies![indexPath!.row]
+            if searchController.active {
+                movie = filterMovies![indexPath!.row]
+            }
+            
             let detailViewController = segue.destinationViewController as! DetailViewController
             detailViewController.movie = movie
-        
-        
-            print("detail segue called")
-            // Get the new view controller using segue.destinationViewController.
-            // Pass the selected object to the new view controller.
+            
+            searchController.active = false
+            
         } else if segue.identifier == "gridView" {
             let gridViewController = segue.destinationViewController as! CollectionViewController
             gridViewController.endpoint = endpoint

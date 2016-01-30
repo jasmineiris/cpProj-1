@@ -197,21 +197,23 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         networkRequest()
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
         if segue.identifier == "detailView" {
             print("detail segue called")
             let cell = sender as! UICollectionViewCell
             let indexPath = collectionView.indexPathForCell(cell)
-            let movie = movies![indexPath!.row]
+            
+            var movie = movies![indexPath!.row]
+            if searchController.active {
+                movie = filterMovies![indexPath!.row]
+            }
             
             let detailViewController = segue.destinationViewController as! DetailViewController
             detailViewController.movie = movie
             
+            searchController.active = false
             
             print("detail segue called")
-            // Get the new view controller using segue.destinationViewController.
-            // Pass the selected object to the new view controller.
-        } 
+                   }
     }
 
 }

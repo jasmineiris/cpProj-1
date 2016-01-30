@@ -15,7 +15,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var infoView: UIView!
-    
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     var movie: NSDictionary!
     
 
@@ -23,6 +25,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height)
+        scrollView.autoresizingMask = .FlexibleHeight
         
         let title = movie["title"] as? String
         titleLabel.text = title
@@ -30,7 +33,22 @@ class DetailViewController: UIViewController {
         let overview = movie["overview"]
         overviewLabel.text = overview as? String
         
+        ratingLabel.text = movie["vote_average"]!.stringValue + " / 10"
+        
         overviewLabel.sizeToFit()
+        
+     //   let time = movieInfo["runtime"] as? Int
+        
+        //var time = movie["runtime"]!.integerValue!;
+        
+        let releaseDate = movie["release_date"] as! String
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.dateFromString(releaseDate)
+        dateFormatter.dateFormat = "MM.dd.yy"
+        let dateText = dateFormatter.stringFromDate(date!)
+        releaseDateLabel.text = dateText
+        
         
         let baseURL = "http://image.tmdb.org/t/p/w500"
         
@@ -40,11 +58,11 @@ class DetailViewController: UIViewController {
             posterImageView.setImageWithURL(posterURL!)
         }
 
-           print(movie)
 
         // Do any additional setup after loading the view.
     }
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
