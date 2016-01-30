@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         NSLog("Before Sleep")
-        sleep(2);
+        sleep(1);
         NSLog("After sleep")
         
         // Override point for customization after application launch.

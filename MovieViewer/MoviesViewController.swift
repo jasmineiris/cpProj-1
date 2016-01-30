@@ -111,8 +111,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let rating = movie["vote_average"]!.stringValue + " / 10"
         
         cell.ratingLabel.text = rating
+        cell.ratingLabel.layer.cornerRadius = 5
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        
         
         let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
         let baseURL = "http://image.tmdb.org/t/p/w500"
