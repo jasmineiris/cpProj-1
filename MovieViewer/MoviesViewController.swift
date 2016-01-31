@@ -20,6 +20,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var filterMovies: [NSDictionary]?
     var refreshControl: UIRefreshControl!
     var endpoint: String!
+    
     //search bar display
     var searchController = UISearchController(searchResultsController: nil)
     
@@ -41,6 +42,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        func addBlurEffect() {
+            // Add blur view
+            let bounds = self.navigationController?.navigationBar.bounds as CGRect!
+            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+            visualEffectView.frame = bounds
+            visualEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            self.navigationController?.navigationBar.addSubview(visualEffectView)
+            
+            // Here you can add visual effects to any UIView control.
+            // Replace custom view with navigation bar in above code to add effects to custom view.
+        }
         
         PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.show()
@@ -108,12 +121,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let title = movie["title"] as? String
         let overview = movie["overview"] as? String
-        let rating = movie["vote_average"]!.stringValue + " / 10"
+        let rating = movie["vote_average"]!.stringValue + " /10"
+        //cell.ratingLabel.text = String(format: " /", rating)
         
         cell.ratingLabel.text = rating
-        cell.ratingLabel.layer.cornerRadius = 5
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        cell.genresLabel.text = getGenre(movie["id"] as! Int)
         
         
         let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
@@ -122,12 +136,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let low_resolution = "https://image.tmdb.org/t/p/w45"
         let high_resolution = "https://image.tmdb.org/t/p/original"
         let imageRequest = NSURLRequest(URL: NSURL(string: imageUrl)!)
-        let posterPath = movie["poster_path"] as! String?
-        let smallImage = NSURL(string: low_resolution + posterPath!)
-        let largeImage = NSURL(string: high_resolution + posterPath!)
-        
-        let smallImageRequest = NSURLRequest(URL: smallImage!)
-        let largeImageRequest = NSURLRequest(URL: largeImage!)
+        if let posterPath = movie["poster_path"] as? String{
+            let smallImage = NSURL(string: low_resolution + posterPath)
+            let largeImage = NSURL(string: high_resolution + posterPath)
+            let smallImageRequest = NSURLRequest(URL: smallImage!)
+            let largeImageRequest = NSURLRequest(URL: largeImage!)
         
         func loadLowResolutionThenLargerImages(smallImageRequest: NSURLRequest,
             largeImageRequest: NSURLRequest, poster: UIImageView?) {
@@ -137,10 +150,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
                         cell.posterView!.alpha = 0.0
                         cell.posterView!.image = smallImage
-                        //cell.posterVIew!.contentMode = .ScaleAspectFit
+                
                         
                         UIView.animateWithDuration(0.3, animations: { cell.posterView!.alpha = 1.0 },
                             completion: { (success) -> Void in
+                                
                                 cell.posterView!.setImageWithURLRequest(largeImageRequest,
                                     placeholderImage: smallImage,
                                     success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
@@ -177,7 +191,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             failure: { (imageRequest, imageResponse, error) -> Void in
                 // do something for the failure condition
         })
-        
+        }
         if let posterPath = movie["poster_path"] as? String {
         let posterURL = NSURL(string: baseURL + posterPath)
         cell.posterView.setImageWithURL(posterURL!)
@@ -223,6 +237,44 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func didRefresh() {
         networkRequest()
     }
+    
+    func getGenre(movieId : Int) -> String {
+        var genres = [""]
+        genres.removeAll()
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = NSURL(string:"http://api.themoviedb.org/3/movie/\(movieId)?api_key=\(apiKey)")
+        print(url)
+        let request = NSURLRequest(URL: url!)
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate:nil,
+            delegateQueue:NSOperationQueue.mainQueue()
+        )
+        
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
+            completionHandler: { (dataOrNil, response, error) in
+                
+                if let data = dataOrNil {
+                    if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
+                        data, options:[]) as? NSDictionary {
+                            //NSLog("response: \(responseDictionary)")
+                            
+                            for genre in (responseDictionary["genres"] as? [NSDictionary])! {
+                                genres.append(genre["name"] as! String)
+                            }
+                            //print(genres.joinWithSeparator(", "))
+                    }
+                } else {
+                    
+                    print("There was a network error")
+                }
+        });
+        print(genres)
+        
+        task.resume()
+        return ""
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "detailView" {
             print("detail segue called")

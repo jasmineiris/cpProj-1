@@ -75,10 +75,10 @@
 				368CB4C61C3C8FD6003303C4 /* Views */,
 				368CB4B21C3C7387003303C4 /* AppDelegate.swift */,
 				368CB4B61C3C7387003303C4 /* Main.storyboard */,
-				368CB4B91C3C7387003303C4 /* Assets.xcassets */,
 				368CB4BB1C3C7387003303C4 /* LaunchScreen.storyboard */,
-				368CB4BE1C3C7387003303C4 /* Info.plist */,
+				368CB4B91C3C7387003303C4 /* Assets.xcassets */,
 				36DE82511C55DE1600CD5D1E /* Images.xcassets */,
+				368CB4BE1C3C7387003303C4 /* Info.plist */,
 			);
 			path = MovieViewer;
 			sourceTree = "<group>";

@@ -18,6 +18,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     var filterMovies: [NSDictionary]?
     var refreshControl: UIRefreshControl!
     var endpoint: String!
+   // var visualEffectView = UIVisualEffect(coder: UIBlurEffect(style: .Light))
     //search bar display
     var searchController = UISearchController(searchResultsController: nil)
     
@@ -94,12 +95,12 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         
         let low_resolution = "https://image.tmdb.org/t/p/w45"       //low resolution image's address
         let high_resolution = "https://image.tmdb.org/t/p/original" //high resolution image's address
-        let posterPath = movie["poster_path"] as! String?
-        let smallImage = NSURL(string: low_resolution + posterPath!)
-        let largeImage = NSURL(string: high_resolution + posterPath!)
-        
-        let smallImageRequest = NSURLRequest(URL: smallImage!)
-        let largeImageRequest = NSURLRequest(URL: largeImage!)
+        if let posterPath = movie["poster_path"] as? String{
+            
+            let smallImage = NSURL(string: low_resolution + posterPath)
+            let largeImage = NSURL(string: high_resolution + posterPath)
+            let smallImageRequest = NSURLRequest(URL: smallImage!)
+            let largeImageRequest = NSURLRequest(URL: largeImage!)
         
         func loadLowResolutionThenLargerImages(smallImageRequest: NSURLRequest,
             largeImageRequest: NSURLRequest, poster: UIImageView?) {
@@ -150,7 +151,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
             failure: { (imageRequest, imageResponse, error) -> Void in
                 // do something for the failure condition
         })
-        
+        }
         if let posterPath = movie["poster_path"] as? String {
             let posterURL = NSURL(string: baseURL + posterPath)
             cell.imageCell.setImageWithURL(posterURL!)
