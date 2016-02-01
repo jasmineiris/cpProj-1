@@ -30,6 +30,9 @@ The following **additional** features are implemented:
 - [x] User can view movie synopsis by clicking on table view or cell
 - [x] Search bar is hidden from user until needed
 - [x] Customize icon and launch screen
+- [x] Video player using youtube URL
+- [x] UINavgation bar icon via customize
+- [x] Animated connection Error
 
 ## Video Walkthrough 
 
