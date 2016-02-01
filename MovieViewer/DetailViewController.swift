@@ -43,7 +43,6 @@ class DetailViewController: UIViewController {
         titleLabel.text = title
         let overview = movie["overview"]
         overviewLabel.text = overview as? String
-        //ratingLabel.text = movie["vote_average"]!.stringValue + " / 10"
         ratingLabel.text = String(format: " %.2f /10", movie["vote_average"] as! Float)
         
         overviewLabel.sizeToFit()
