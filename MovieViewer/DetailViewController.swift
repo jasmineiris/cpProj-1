@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+//import MBProgressHUD
 
 class DetailViewController: UIViewController {
     
@@ -21,7 +22,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     
     @IBAction func trailerButton(sender: AnyObject) {
-        
         
     
     }
@@ -49,10 +49,6 @@ class DetailViewController: UIViewController {
         ratingLabel.text = movie["vote_average"]!.stringValue + " / 10"
         
         overviewLabel.sizeToFit()
-        
-     //   let time = movieInfo["runtime"] as? Int
-        
-        //var time = movie["runtime"]!.integerValue!;
         print(movie)
 
         movieId = movie["id"]!.stringValue
@@ -65,8 +61,6 @@ class DetailViewController: UIViewController {
         dateFormatter.dateFormat = "MM.dd.yy"
         let dateText = dateFormatter.stringFromDate(date!)
         releaseDateLabel.text = dateText
-        
-        
         let baseURL = "http://image.tmdb.org/t/p/w500"
         
         if let posterPath = movie["poster_path"] as? String {
@@ -117,7 +111,7 @@ class DetailViewController: UIViewController {
         task.resume()
         
     }
-    
+
 
     /*
     // MARK: - Navigation

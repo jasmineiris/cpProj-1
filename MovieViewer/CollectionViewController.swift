@@ -9,6 +9,7 @@
 import UIKit
 import AFNetworking
 import PKHUD
+//import MBProgressHUD
 
 class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -69,7 +70,6 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
     }
-
     
     func filterContentForSearchText(searchText: String, scope: String = "all") {
         filterMovies = movies!.filter { mov in return mov["title"]!.lowercaseString.containsString(searchText.lowercaseString)
@@ -77,8 +77,6 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         
         collectionView.reloadData()
     }
-
-    
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         

@@ -33,11 +33,11 @@
                                                     <color key="backgroundColor" red="0.9264717487373737" green="0.9264717487373737" blue="0.9264717487373737" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar" id="rM8-s6-0hA">
-                                                    <rect key="frame" x="107" y="36" width="222" height="21"/>
+                                                    <rect key="frame" x="107" y="33" width="222" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5pt-6d-IuF">
-                                                    <rect key="frame" x="124" y="8" width="173" height="33"/>
+                                                    <rect key="frame" x="124" y="4" width="173" height="33"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Title">
@@ -51,7 +51,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nnj-EF-Mfq">
-                                                    <rect key="frame" x="91" y="36" width="223" height="21"/>
+                                                    <rect key="frame" x="91" y="32" width="223" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="rating">
@@ -65,7 +65,7 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o1a-8U-xzU">
-                                                    <rect key="frame" x="124" y="56" width="173" height="114"/>
+                                                    <rect key="frame" x="124" y="70" width="173" height="96"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Overview">
@@ -80,13 +80,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I1C-ad-5D4">
-                                                    <rect key="frame" x="122" y="54" width="157" height="21"/>
+                                                    <rect key="frame" x="122" y="51" width="165" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Genre">
                                                             <attributes>
                                                                 <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                                <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
@@ -112,6 +112,10 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="networkE" id="TGh-hL-DXL">
+                                <rect key="frame" x="0.0" y="232" width="320" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="MovieHub" id="QZB-Uh-qEU">
@@ -133,6 +137,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="networkLabel" destination="TGh-hL-DXL" id="LMg-0O-xtg"/>
                         <outlet property="searchDisplayController" destination="ySL-xg-fbX" id="AkM-Zw-NCL"/>
                         <outlet property="tableView" destination="msb-QP-7YL" id="ZyT-ij-TL9"/>
                     </connections>
@@ -295,7 +300,7 @@
                                                 <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GPa-VF-jWa">
-                                                <rect key="frame" x="215" y="288.5" width="97" height="25.5"/>
+                                                <rect key="frame" x="215" y="288.5" width="92" height="25.5"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="releaseDate">
@@ -373,6 +378,7 @@
         <image name="bar" width="800" height="600"/>
         <image name="context" width="800" height="600"/>
         <image name="grid" width="39" height="39"/>
+        <image name="networkE" width="468" height="60"/>
         <image name="play-button" width="277" height="271"/>
     </resources>
     <inferredMetricsTieBreakers>

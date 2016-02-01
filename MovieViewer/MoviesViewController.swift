@@ -9,12 +9,13 @@
 import UIKit
 import AFNetworking
 import PKHUD
+//import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
+    @IBOutlet weak var networkLabel: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var networkErrorView: UIView!
-   
+
     
     var movies: [NSDictionary]?
     var filterMovies: [NSDictionary]?
@@ -36,24 +37,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
-        //searchController.searchBar.tintColor.CGColor
+        //searchController.searchBar.backgroundColor = [UIColor: Black]
         searchController.searchResultsUpdater = self
 
         
         tableView.dataSource = self
         tableView.delegate = self
-        
-        func addBlurEffect() {
-            // Add blur view
-            let bounds = self.navigationController?.navigationBar.bounds as CGRect!
-            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
-            visualEffectView.frame = bounds
-            visualEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-            self.navigationController?.navigationBar.addSubview(visualEffectView)
-            
-            // Here you can add visual effects to any UIView control.
-            // Replace custom view with navigation bar in above code to add effects to custom view.
-        }
         
         PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.show()
@@ -121,14 +110,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let title = movie["title"] as? String
         let overview = movie["overview"] as? String
-        let rating = movie["vote_average"]!.stringValue + " /10"
-        //cell.ratingLabel.text = String(format: " /", rating)
+        let rating = String(format: " %.2f /10", movie["vote_average"] as! Float)
         
         cell.ratingLabel.text = rating
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.genresLabel.text = getGenre(movie["id"] as! Int)
-        
+        cell.getMoreData(movie["id"] as! Int)
         
         let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
         let baseURL = "http://image.tmdb.org/t/p/w500"
@@ -137,6 +124,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let high_resolution = "https://image.tmdb.org/t/p/original"
         let imageRequest = NSURLRequest(URL: NSURL(string: imageUrl)!)
         if let posterPath = movie["poster_path"] as? String{
+            
             let smallImage = NSURL(string: low_resolution + posterPath)
             let largeImage = NSURL(string: high_resolution + posterPath)
             let smallImageRequest = NSURLRequest(URL: smallImage!)
@@ -224,10 +212,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                             
                             PKHUD.sharedHUD.hide()
                             self.refreshControl.endRefreshing()
+                            self.networkLabel.hidden = true
                     }
                 } else {
-                    
-                    print("There was a network error")
+                    self.networkLabel.hidden = false
+                    print("Network error")
+                    self.refreshControl.endRefreshing()
                 }
         });
         task.resume()
@@ -236,44 +226,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func didRefresh() {
         networkRequest()
-    }
-    
-    func getGenre(movieId : Int) -> String {
-        var genres = [""]
-        genres.removeAll()
-        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string:"http://api.themoviedb.org/3/movie/\(movieId)?api_key=\(apiKey)")
-        print(url)
-        let request = NSURLRequest(URL: url!)
-        let session = NSURLSession(
-            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
-            delegate:nil,
-            delegateQueue:NSOperationQueue.mainQueue()
-        )
-        
-        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
-            completionHandler: { (dataOrNil, response, error) in
-                
-                if let data = dataOrNil {
-                    if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
-                        data, options:[]) as? NSDictionary {
-                            //NSLog("response: \(responseDictionary)")
-                            
-                            for genre in (responseDictionary["genres"] as? [NSDictionary])! {
-                                genres.append(genre["name"] as! String)
-                            }
-                            //print(genres.joinWithSeparator(", "))
-                    }
-                } else {
-                    
-                    print("There was a network error")
-                }
-        });
-        print(genres)
-        
-        task.resume()
-        return ""
-    }
+    }    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "detailView" {
@@ -296,7 +249,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             gridViewController.endpoint = endpoint
         }
     }
-    
 
 }
 extension MoviesViewController: UISearchResultsUpdating {
