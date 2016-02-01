@@ -14,14 +14,17 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
+  - MBProgressHUD (0.9.2)
   - PKHUD (2.2.5)
 
 DEPENDENCIES:
   - AFNetworking
+  - MBProgressHUD
   - PKHUD
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   PKHUD: 15d9db01fb008bb9247c6d785c585f587955b113
 
 COCOAPODS: 0.39.0

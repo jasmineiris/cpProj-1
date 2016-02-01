@@ -8,12 +8,10 @@
 
 import UIKit
 import AFNetworking
-import PKHUD
-//import MBProgressHUD
+import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    @IBOutlet weak var networkLabel: UIImageView!
+    @IBOutlet weak var networkErrorView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
 
     
@@ -33,48 +31,37 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //search bar display
         
+        //network error display
+        view.addSubview(networkErrorView)
+        
+        //search bar display
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
-        //searchController.searchBar.backgroundColor = [UIColor: Black]
         searchController.searchResultsUpdater = self
-
         
         tableView.dataSource = self
         tableView.delegate = self
         
-        PKHUD.sharedHUD.contentView = PKHUDProgressView()
-        PKHUD.sharedHUD.show()
-        
+        //programatic instantiation refresh Controller
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "didRefresh", forControlEvents:
             .ValueChanged)
         tableView.insertSubview(refreshControl, atIndex: 0)
         
         networkRequest()
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    
-    func roundFloat(value: Float) -> Float {
-        return roundf(value * 100) / 100
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        //search bar display
         if searchController.active && searchController.searchBar.text != "" {
             return filterMovies!.count
         }
         if let movies = movies {
-            //return filterMovies!.count
             return movies.count
         } else {
             return 0
@@ -87,11 +74,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         print("item selected")
         print(indexPath)
-        
     
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "all") {
+        //filter data for search bar display
         filterMovies = movies!.filter { mov in return mov["title"]!.lowercaseString.containsString(searchText.lowercaseString)
         }
         
@@ -101,9 +88,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
-        
         var movie = movies![indexPath.row]
-        
         if searchController.active && searchController.searchBar.text != "" {
             movie = filterMovies![indexPath.row]
         }
@@ -117,72 +102,42 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         cell.overviewLabel.text = overview
         cell.getMoreData(movie["id"] as! Int)
         
-        let imageUrl = "https://i.imgur.com/tGbaZCY.jpg"
         let baseURL = "http://image.tmdb.org/t/p/w500"
-        
-        let low_resolution = "https://image.tmdb.org/t/p/w45"
-        let high_resolution = "https://image.tmdb.org/t/p/original"
-        let imageRequest = NSURLRequest(URL: NSURL(string: imageUrl)!)
+        let low_resolution = "https://image.tmdb.org/t/p/w45" //low resolution image's address
+        let high_resolution = "https://image.tmdb.org/t/p/original" //high resolution image's address
+
         if let posterPath = movie["poster_path"] as? String{
             
             let smallImage = NSURL(string: low_resolution + posterPath)
             let largeImage = NSURL(string: high_resolution + posterPath)
             let smallImageRequest = NSURLRequest(URL: smallImage!)
             let largeImageRequest = NSURLRequest(URL: largeImage!)
-        
-        func loadLowResolutionThenLargerImages(smallImageRequest: NSURLRequest,
-            largeImageRequest: NSURLRequest, poster: UIImageView?) {
                 
-                cell.posterView!.setImageWithURLRequest(smallImageRequest,
-                    placeholderImage: nil ,
-                    success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
-                        cell.posterView!.alpha = 0.0
-                        cell.posterView!.image = smallImage
+            cell.posterView!.setImageWithURLRequest(smallImageRequest,
+            placeholderImage: nil ,
+            success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
+                cell.posterView!.alpha = 0.0
+                cell.posterView!.image = smallImage
                 
-                        
-                        UIView.animateWithDuration(0.3, animations: { cell.posterView!.alpha = 1.0 },
-                            completion: { (success) -> Void in
-                                
-                                cell.posterView!.setImageWithURLRequest(largeImageRequest,
-                                    placeholderImage: smallImage,
-                                    success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
-                                        cell.posterView!.image = largeImage
-                                    }, failure: { (request, response, error ) -> Void in
-                                        cell.posterView!.image = UIImage(named: "posterView")
-                                })
-                            }
-                        )
-                    }, failure: {(request, response, error) -> Void in
+                UIView.animateWithDuration(0.3, animations: { cell.posterView!.alpha = 1.0 },
+                completion: { (success) -> Void in
+                    cell.posterView!.setImageWithURLRequest(largeImageRequest,
+                    placeholderImage: smallImage,
+                    success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
+                        cell.posterView!.image = largeImage
+                    },
+                    failure: { (request, response, error ) -> Void in
                         cell.posterView!.image = UIImage(named: "posterView")
-                    }
-                )
-        }
-        
-        cell.posterView.setImageWithURLRequest(
-            imageRequest,
-            placeholderImage: nil,
-            success: { (imageRequest, imageResponse, image) -> Void in
-                
-                // imageResponse will be nil if the image is cached
-                if imageResponse != nil {
-                    //print("Image was NOT cached, fade in image")
-                    cell.posterView.alpha = 0.0
-                    cell.posterView.image = image
-                    UIView.animateWithDuration( 0.8, animations: { () -> Void in
-                        cell.posterView.alpha = 1.0
                     })
-                } else {
-                    //print("Image was cached so just update the image")
-                    cell.posterView.image = image
-                }
+                })
             },
-            failure: { (imageRequest, imageResponse, error) -> Void in
-                // do something for the failure condition
-        })
-        }
-        if let posterPath = movie["poster_path"] as? String {
-        let posterURL = NSURL(string: baseURL + posterPath)
-        cell.posterView.setImageWithURL(posterURL!)
+            failure: {(request, response, error) -> Void in
+                cell.posterView!.image = UIImage(named: "posterView")
+            })
+        } else if let posterPath = movie["poster_path"] as? String {
+            
+            let posterURL = NSURL(string: baseURL + posterPath)
+            cell.posterView.setImageWithURL(posterURL!)
         }
         
         return cell
@@ -198,26 +153,40 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             delegateQueue:NSOperationQueue.mainQueue()
         )
         
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        
         let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
             completionHandler: { (dataOrNil, response, error) in
                 
                 if let data = dataOrNil {
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
-                            //NSLog("response: \(responseDictionary)")
+                        
                             print(responseDictionary)
                             self.movies = responseDictionary["results"] as? [NSDictionary]
-                            //print(self.movies![1]["title"])
                             self.tableView.reloadData()
-                            
-                            PKHUD.sharedHUD.hide()
+                            MBProgressHUD.hideHUDForView(self.view, animated: true)
                             self.refreshControl.endRefreshing()
-                            self.networkLabel.hidden = true
+                            self.networkErrorView.hidden = true
                     }
                 } else {
-                    self.networkLabel.hidden = false
-                    print("Network error")
+                    
+                    self.tableView.hidden = true
+                    self.networkErrorView.hidden = false
+                    self.view.bringSubviewToFront(self.networkErrorView)
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
                     self.refreshControl.endRefreshing()
+                    UIView.animateWithDuration(1.5, delay: 0.2, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        self.networkErrorView.alpha = 1.0
+                        }, completion: {
+                            (finished: Bool) -> Void in
+                            UIView.animateWithDuration(1.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                                self.networkErrorView.alpha = 0.0
+                                }, completion: nil)
+                    })
+                    
+                    self.tableView.hidden = false
+                    print("Network error")
                 }
         });
         task.resume()
@@ -256,9 +225,3 @@ extension MoviesViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
-
-
-// MARK: - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-

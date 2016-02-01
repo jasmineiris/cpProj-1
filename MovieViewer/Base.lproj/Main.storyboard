@@ -13,8 +13,12 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rederror" id="7Zp-rG-Xfl">
+                                <rect key="frame" x="115" y="170" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsMultipleSelection="YES" rowHeight="157" sectionHeaderHeight="28" sectionFooterHeight="28" id="msb-QP-7YL">
-                                <rect key="frame" x="0.0" y="9" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="6" width="320" height="577"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.62261284719999999" green="0.070945663610000001" blue="0.047849470290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,7 +89,7 @@
                                                     <attributedString key="attributedText">
                                                         <fragment content="Genre">
                                                             <attributes>
-                                                                <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -112,10 +116,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="networkE" id="TGh-hL-DXL">
-                                <rect key="frame" x="0.0" y="232" width="320" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="MovieHub" id="QZB-Uh-qEU">
@@ -137,7 +137,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="networkLabel" destination="TGh-hL-DXL" id="LMg-0O-xtg"/>
+                        <outlet property="networkErrorView" destination="7Zp-rG-Xfl" id="gor-rq-TxJ"/>
                         <outlet property="searchDisplayController" destination="ySL-xg-fbX" id="AkM-Zw-NCL"/>
                         <outlet property="tableView" destination="msb-QP-7YL" id="ZyT-ij-TL9"/>
                     </connections>
@@ -162,6 +162,10 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rederror" id="5mg-mC-Zmh">
+                                <rect key="frame" x="112" y="171" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="KlG-Xu-oTS">
                                 <rect key="frame" x="0.0" y="6" width="320" height="562"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -206,6 +210,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="KlG-Xu-oTS" id="cef-to-fBL"/>
+                        <outlet property="networkErrorView" destination="5mg-mC-Zmh" id="JzJ-cH-36L"/>
                         <outlet property="searchDisplayController" destination="nfk-fo-cX2" id="NTy-co-QPg"/>
                     </connections>
                 </viewController>
@@ -378,8 +383,8 @@
         <image name="bar" width="800" height="600"/>
         <image name="context" width="800" height="600"/>
         <image name="grid" width="39" height="39"/>
-        <image name="networkE" width="468" height="60"/>
         <image name="play-button" width="277" height="271"/>
+        <image name="rederror" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="hZE-kZ-tnA"/>

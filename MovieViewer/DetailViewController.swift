@@ -8,7 +8,7 @@
 
 import UIKit
 import AVKit
-//import MBProgressHUD
+import MBProgressHUD
 
 class DetailViewController: UIViewController {
     
@@ -20,7 +20,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    
+    @IBOutlet weak var networkErrorView: UIImageView!
     @IBAction func trailerButton(sender: AnyObject) {
         
     
@@ -28,7 +28,6 @@ class DetailViewController: UIViewController {
     
     var movie: NSDictionary!
     var movieId: String!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +41,10 @@ class DetailViewController: UIViewController {
         
         let title = movie["title"] as? String
         titleLabel.text = title
-        
         let overview = movie["overview"]
         overviewLabel.text = overview as? String
-        
-        ratingLabel.text = movie["vote_average"]!.stringValue + " / 10"
+        //ratingLabel.text = movie["vote_average"]!.stringValue + " / 10"
+        ratingLabel.text = String(format: " %.2f /10", movie["vote_average"] as! Float)
         
         overviewLabel.sizeToFit()
         print(movie)
@@ -67,17 +65,12 @@ class DetailViewController: UIViewController {
             
             let posterURL = NSURL(string: baseURL + posterPath)
             posterImageView.setImageWithURL(posterURL!)
+            
         }
-
-
-        // Do any additional setup after loading the view.
-        
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func movieRequest() {
@@ -91,19 +84,36 @@ class DetailViewController: UIViewController {
             delegateQueue:NSOperationQueue.mainQueue()
         )
         
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        
         let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
             completionHandler: { (dataOrNil, response, error) in
                 
                 if let data = dataOrNil {
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
-                            //NSLog("response: \(responseDictionary)")
-                            //print(responseDictionary)
-                            //print(responseDictionary["runtime"])
+                            
                             let durationText = responseDictionary["runtime"]!.stringValue
                             self.timeLabel.text = durationText + " mins"
+                            MBProgressHUD.hideHUDForView(self.view, animated: true)
+                            //self.refreshControl.endRefreshing()
+                            //self.networkErrorView.hidden = true
                     }
                 } else {
+                    
+                    //self.tableView.hidden = true
+                    self.networkErrorView.hidden = false
+                    self.view.bringSubviewToFront(self.networkErrorView)
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
+                    //self.refreshControl.endRefreshing()
+                    UIView.animateWithDuration(1.5, delay: 0.2, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        self.networkErrorView.alpha = 1.0
+                        }, completion: {
+                            (finished: Bool) -> Void in
+                            UIView.animateWithDuration(1.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                                self.networkErrorView.alpha = 0.0
+                                }, completion: nil)
+                    })
                     
                     print("There was a network error")
                 }
