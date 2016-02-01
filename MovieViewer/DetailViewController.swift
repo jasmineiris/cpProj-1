@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var videoView: UIWebView!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var infoView: UIView!
@@ -21,16 +22,23 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var networkErrorView: UIImageView!
-    @IBAction func trailerButton(sender: AnyObject) {
-        
     
+    @IBAction func trailerButton(sender: AnyObject) {
+        view.addSubview(videoView)
+        videoView.hidden = false
+        videoView.loadRequest(NSURLRequest(URL: videoUrl!))
     }
     
     var movie: NSDictionary!
     var movieId: String!
-
+    var refreshControl: UIRefreshControl!
+    var videoUrl: NSURL!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        videoView.hidden = true
+        
         
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height+30)
         scrollView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
@@ -49,7 +57,12 @@ class DetailViewController: UIViewController {
         print(movie)
 
         movieId = movie["id"]!.stringValue
-        movieRequest()
+        
+        //programatic instantiation refresh Controller
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "didRefresh", forControlEvents:
+            .ValueChanged)
+        didRefresh()
         
         let releaseDate = movie["release_date"] as! String
         let dateFormatter = NSDateFormatter()
@@ -95,7 +108,7 @@ class DetailViewController: UIViewController {
                             let durationText = responseDictionary["runtime"]!.stringValue
                             self.timeLabel.text = durationText + " mins"
                             MBProgressHUD.hideHUDForView(self.view, animated: true)
-                            //self.refreshControl.endRefreshing()
+                            self.refreshControl.endRefreshing()
                             //self.networkErrorView.hidden = true
                     }
                 } else {
@@ -104,7 +117,7 @@ class DetailViewController: UIViewController {
                     self.networkErrorView.hidden = false
                     self.view.bringSubviewToFront(self.networkErrorView)
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
-                    //self.refreshControl.endRefreshing()
+                    self.refreshControl.endRefreshing()
                     UIView.animateWithDuration(1.5, delay: 0.2, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                         self.networkErrorView.alpha = 1.0
                         }, completion: {
@@ -121,7 +134,58 @@ class DetailViewController: UIViewController {
         
     }
 
-
+    func videoRequest() {
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = NSURL(string:"http://api.themoviedb.org/3/movie/\(movieId)/videos?api_key=\(apiKey)")
+        print(url)
+        let request = NSURLRequest(URL: url!)
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate:nil,
+            delegateQueue:NSOperationQueue.mainQueue()
+        )
+        
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
+            completionHandler: { (dataOrNil, response, error) in
+                
+                if let data = dataOrNil {
+                    if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
+                        data, options:[]) as? NSDictionary {
+                            let vidData = responseDictionary["results"] as! [NSDictionary]
+                            let vd : NSDictionary = vidData[0] as NSDictionary
+                            let site = vd["site"] as! String
+                            let key = vd["key"] as! String
+                            if site == "YouTube" {
+                                self.videoUrl = NSURL(string: "https://www.youtube.com/watch?v=\(key)")
+                            } else {
+                                print(site)
+                                print(key)
+                            }
+                            self.refreshControl.endRefreshing()
+                    }
+                } else {
+                    
+                    self.networkErrorView.hidden = false
+                    self.view.bringSubviewToFront(self.networkErrorView)
+                    UIView.animateWithDuration(1.5, delay: 0.2, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        self.networkErrorView.alpha = 1.0
+                        }, completion: {
+                            (finished: Bool) -> Void in
+                            UIView.animateWithDuration(1.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                                self.networkErrorView.alpha = 0.0
+                                }, completion: nil)
+                    })
+                    
+                    print("There was a network error")
+                }
+        });
+        task.resume()
+        
+    }
+    func didRefresh() {
+        movieRequest()
+        videoRequest()
+    }
     /*
     // MARK: - Navigation
 
