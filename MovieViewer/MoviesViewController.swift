@@ -8,6 +8,7 @@
 
 import UIKit
 import AFNetworking
+//import PKHUD
 import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -23,6 +24,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     //search bar display
     var searchController = UISearchController(searchResultsController: nil)
     
+    
     //search bar display
     @IBAction func resultsButton(sender: AnyObject) {
         
@@ -31,14 +33,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //network error display
+        //network error
         view.addSubview(networkErrorView)
         
         //search bar display
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
+        //searchController.searchBar.backgroundColor = [UIColor: Black]
         searchController.searchResultsUpdater = self
+
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -50,11 +53,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.insertSubview(refreshControl, atIndex: 0)
         
         networkRequest()
+        
+        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //search bar display
@@ -74,6 +81,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         print("item selected")
         print(indexPath)
+        
     
     }
     
@@ -88,7 +96,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
+        
         var movie = movies![indexPath.row]
+        
         if searchController.active && searchController.searchBar.text != "" {
             movie = filterMovies![indexPath.row]
         }
@@ -103,8 +113,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         cell.getMoreData(movie["id"] as! Int)
         
         let baseURL = "http://image.tmdb.org/t/p/w500"
-        let low_resolution = "https://image.tmdb.org/t/p/w45" //low resolution image's address
-        let high_resolution = "https://image.tmdb.org/t/p/original" //high resolution image's address
+        
+        //transition low resolution image to high resolution
+        let low_resolution = "https://image.tmdb.org/t/p/w45"
+        let high_resolution = "https://image.tmdb.org/t/p/original"
 
         if let posterPath = movie["poster_path"] as? String{
             
@@ -135,7 +147,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 cell.posterView!.image = UIImage(named: "posterView")
             })
         } else if let posterPath = movie["poster_path"] as? String {
-            
             let posterURL = NSURL(string: baseURL + posterPath)
             cell.posterView.setImageWithURL(posterURL!)
         }
@@ -170,10 +181,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                             self.networkErrorView.hidden = true
                     }
                 } else {
-                    
                     self.tableView.hidden = true
                     self.networkErrorView.hidden = false
                     self.view.bringSubviewToFront(self.networkErrorView)
+                    
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
                     self.refreshControl.endRefreshing()
                     UIView.animateWithDuration(1.5, delay: 0.2, options: UIViewAnimationOptions.CurveEaseIn, animations: {
@@ -225,3 +236,9 @@ extension MoviesViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
+
+
+// MARK: - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+
