@@ -19,8 +19,8 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
-
+- [x] video player using youtube
+- [x] Customize network errors
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
 1. Adding videos
@@ -30,7 +30,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/jasmineiris/cpProj-1/blob/master/MovieHub1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/jasmineiris/cpProj-1/blob/master/MovieHub.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' /><img src='https://github.com/jasmineiris/cpProj-1/blob/master/MovieHubError.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' /><img src='https://github.com/jasmineiris/cpProj-1/blob/master/MovieHub1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
