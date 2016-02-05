@@ -1,5 +1,3 @@
-# cpProj-1
-Movie Theater Review iOS App
 
 # Project 1 - *MovieHub*
 
@@ -48,7 +46,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [2016] [Jasmine Farrell]
+    Copyright 2016 Jasmine Iris Farrell
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
